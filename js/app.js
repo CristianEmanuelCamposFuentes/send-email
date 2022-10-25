@@ -4,25 +4,39 @@ document.addEventListener('DOMContentLoaded', function(){
     const inputEmail = document.querySelector('#email');
     const inputAsunto = document.querySelector('#asunto');
     const inputMensaje = document.querySelector('#mensaje');
+    const formulario = document.querySelector('#formulario');
+
 
     // Asignar eventos 
-    inputEmail.addEventListener('blur', function(e){
-        // Evento cuando abandonas un campo 'blur'
-        console.log(e.target.value);
-    });
+    // Evento cuando abandonas un campo 'blur'
+    inputEmail.addEventListener('blur', validar);
 
-    inputAsunto.addEventListener('blur', function(e){
-        // Evento cuando abandonas un campo 'blur'
-        console.log(e.target.value);
-    });
+    inputAsunto.addEventListener('blur', validar);
 
-    inputMensaje.addEventListener('blur', function(e){
-        // Evento cuando abandonas un campo 'blur'
-        console.log(e.target.value);
-    });
+    inputMensaje.addEventListener('blur',validar);
 
-    function validar() {
-        console.log('desde la fn de validar');
+    function validar(e) {
+        if(e.target.value.trim() === ''){
+            mostrarAlerta(`El campo ${e.target.id} es obligatorio`, e.target.parentElement);
+        } else {
+            console.log('Hay algo');
+        };
+    }
+
+    function mostrarAlerta(mensaje, referencia){
+        // Comprueba si ya existe una alerta
+        const alerta = referencia.querySelector('.bg-red-600');
+        if(alerta){
+            alerta.remove();
+        }
+        
+        // Generar alerta en HTML
+        const error = document.createElement('p');
+        error.textContent = mensaje;
+        error.classList.add('bg-red-600', 'text-white', 'p-2', 'text-center');
+
+        // Inyectar en el formulario
+        referencia.appendChild(error);
     }
 
 });
