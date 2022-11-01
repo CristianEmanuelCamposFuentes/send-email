@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const inputMensaje = document.querySelector('#mensaje');
     const formulario = document.querySelector('#formulario');
     const btnSubmit = document.querySelector('#formulario button[type="submit"]');
+    const btnReset = document.querySelector('#formulario button[type="reset"]');
 
     // Asignar eventos 
     // Evento cuando abandonas un campo 'blur'
@@ -21,6 +22,18 @@ document.addEventListener('DOMContentLoaded', function(){
 
     inputMensaje.addEventListener('input',validar);
 
+    btnReset.addEventListener('click', function(e){
+        e.preventDefault();
+
+
+    // Reiniciar el objeto
+    email.asunto = '';
+    email.email = '';
+    email.mensaje = '';
+    formulario.reset();
+    comprobarEmail();
+    })
+    
     function validar(e) {
         if(e.target.value.trim() === ''){
             mostrarAlerta(`El campo ${e.target.id} es obligatorio`, e.target.parentElement);
