@@ -15,20 +15,24 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // Asignar eventos 
     // Evento cuando abandonas un campo 'blur'
-    inputEmail.addEventListener('blur', validar);
+    inputEmail.addEventListener('input', validar);
 
-    inputAsunto.addEventListener('blur', validar);
+    inputAsunto.addEventListener('input', validar);
 
-    inputMensaje.addEventListener('blur',validar);
+    inputMensaje.addEventListener('input',validar);
 
     function validar(e) {
         if(e.target.value.trim() === ''){
             mostrarAlerta(`El campo ${e.target.id} es obligatorio`, e.target.parentElement);
-            return
+            email[e.target.name] = '';
+            comprobarEmail();
+            return;
         } 
         if(e.target.id === 'email' && !validarEmail(e.target.value)){
             mostrarAlerta('El email no es valido', e.target.parentElement);
-            return
+            email[e.target.name] = '';
+            comprobarEmail();
+            return;
         };
         
         limpiarAlerta(e.target.parentElement);
@@ -71,10 +75,12 @@ document.addEventListener('DOMContentLoaded', function(){
 
     function comprobarEmail(){
         if(Object.values(email).includes('')){
-            
-        } else {
-            btnSubmit.classList.remove('opacity-50');
-            btnSubmit.disabled = false;
+            btnSubmit.classList.add('opacity-50');
+            btnSubmit.disabled = true;
+            return;
         }
+        btnSubmit.classList.remove('opacity-50');
+        btnSubmit.disabled = false;
+
     }
 });
