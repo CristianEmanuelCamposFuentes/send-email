@@ -17,22 +17,32 @@ document.addEventListener('DOMContentLoaded', function(){
     // Asignar eventos 
     // Evento cuando abandonas un campo 'blur'
     inputEmail.addEventListener('input', validar);
-
     inputAsunto.addEventListener('input', validar);
-
     inputMensaje.addEventListener('input',validar);
+
+    formulario.addEventListener('submit', enviarEmail);
+
 
     btnReset.addEventListener('click', function(e){
         e.preventDefault();
 
 
-    // Reiniciar el objeto
-    email.asunto = '';
-    email.email = '';
-    email.mensaje = '';
-    formulario.reset();
-    comprobarEmail();
-    })
+        resetearFormulario();
+    });
+
+    function enviarEmail(e){
+        e.preventDefault();
+
+        spinner.classList.add('flex');
+        spinner.classList.remove('hidden');
+
+        setTimeout(() => {
+            spinner.classList.remove('flex');
+            spinner.classList.add('hidden');
+
+            resetearFormulario();
+        }, 3000);
+    }
     
     function validar(e) {
         if(e.target.value.trim() === ''){
@@ -95,5 +105,14 @@ document.addEventListener('DOMContentLoaded', function(){
         btnSubmit.classList.remove('opacity-50');
         btnSubmit.disabled = false;
 
+    }
+
+    function resetearFormulario(){
+        // Reiniciar el objeto
+        email.asunto = '';
+        email.email = '';
+        email.mensaje = '';
+        formulario.reset();
+        comprobarEmail();
     }
 });
